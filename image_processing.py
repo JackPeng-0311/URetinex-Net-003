@@ -99,26 +99,16 @@ def process_image(input_image_path, output_image_path, ratio):
     if image is None:
         print(f"无法读取图像: {input_image_path}")
         return
-
-    # 创建推理模型
     model = Inference(opts)
-
-    # 处理图像
     enhanced_image = model.runForWeb(image)
     enhanced_image = np.clip(enhanced_image, 0, 1)
-
-    # 保存处理后的图像
     cv2.imwrite(output_image_path, (enhanced_image * 255).astype(np.uint8))
     print(f"处理后的图像已保存到: {output_image_path}")
 
 
 if __name__ == "__main__":
-    # 使用相对路径
-    input_path = "./demo/input/123.png"  # 替换为你的输入图像相对路径
-    output_path = "./demo/output/123_enhanced.png"  # 替换为你想要保存的输出图像相对路径
-    ratio = 1.0  # 根据需要设置调整比率
-
-    # 确保输出目录存在
+    input_path = "./demo/input/123.png"
+    output_path = "./demo/output/123_enhanced.png"
+    ratio = 1.0
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
     process_image(input_path, output_path, ratio)
